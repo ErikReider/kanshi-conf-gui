@@ -17,43 +17,42 @@
  */
 
 int main (string[] args) {
-    Gtk.init(ref args);
-    Hdy.init();
+    Gtk.init (ref args);
+    Hdy.init ();
 
     var app = new Gtk.Application ("org.erikr.kanshi-conf-gui", ApplicationFlags.FLAGS_NONE);
     app.activate.connect (() => {
         var win = app.active_window;
         if (win == null) {
-            win = new KanshiConfGui.Window (app, new Parser(config_file()).profiles);
+            win = new KanshiConfGui.Window (app, new Parser (config_file ()).profiles);
         }
-        win.show_all();
+        win.show_all ();
     });
 
     return app.run (args);
 }
 
-File config_file() {
-    string basePath = GLib.Environment.get_user_config_dir() + "/kanshi";
+File config_file () {
+    string basePath = GLib.Environment.get_user_config_dir () + "/kanshi";
     // Checks if directory exists. Creates one if none
-    if (!GLib.FileUtils.test(basePath, GLib.FileTest.IS_DIR)) {
+    if (!GLib.FileUtils.test (basePath, GLib.FileTest.IS_DIR)) {
         try {
-            var file = File.new_for_path(basePath);
-            file.make_directory();
+            var file = File.new_for_path (basePath);
+            file.make_directory ();
         } catch (Error e) {
-            print("Error: %s\n", e.message);
+            print ("Error: %s\n", e.message);
         }
     }
     // Checks if file exists. Creates one if none
     var file = File.new_for_path (basePath + "/config");
     if (!file.query_exists ()) {
         try {
-            file.create(FileCreateFlags.NONE);
+            file.create (FileCreateFlags.NONE);
         } catch (Error e) {
-            print("Error: %s\n", e.message);
-            Process.exit(1);
+            print ("Error: %s\n", e.message);
+            Process.exit (1);
         }
     }
 
     return file;
 }
-

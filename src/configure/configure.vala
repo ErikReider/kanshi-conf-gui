@@ -27,11 +27,11 @@ namespace KanshiConfGui {
         public string text;
 
         public Configure (Profile profile, string index, string text) {
-            Object();
+            Object ();
             this.profile = profile;
             this.index = index;
             this.text = text;
-            title.set_label(text);
+            title.set_label (text);
         }
     }
 }

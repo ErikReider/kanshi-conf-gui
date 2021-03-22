@@ -25,12 +25,12 @@ namespace KanshiConfGui {
         public Profile profile;
         public string label_text;
 
-        public RowBox(Profile profile, string label_text) {
-            Object();
+        public RowBox (Profile profile, string label_text) {
+            Object ();
             this.label_text = label_text;
             this.profile = profile;
-            label.set_text(label_text);
-            show_all();
+            label.set_text (label_text);
+            show_all ();
         }
     }
 }

@@ -30,47 +30,44 @@ namespace KanshiConfGui {
         public Window (Gtk.Application app, Array<Profile> profiles) {
             Object (application: app);
 
-            profiles_listBox.row_activated.connect(row_click);
-            configure_stack.add.connect(stack_on_add);
-            configure_stack.remove.connect(stack_on_remove);
+            profiles_listBox.row_activated.connect (row_click);
+            configure_stack.add.connect (stack_on_add);
+            configure_stack.remove.connect (stack_on_remove);
 
             for (var i = 0; i < profiles.data.length; i++) {
-                addChild(profiles.data[i], i);
+                addChild (profiles.data[i], i);
             }
-            configure_stack.set_child_visible(false);
+            configure_stack.set_child_visible (false);
             // profiles_stack_bar.show_all();
             // profiles_stack_bar.set_stack(configure_stack);
         }
 
         [GtkCallback]
-        public void back_button_click(){
-            if (leaflet.can_swipe_back) leaflet.navigate(Hdy.NavigationDirection.BACK);
+        public void back_button_click () {
+            if (leaflet.can_swipe_back) leaflet.navigate (Hdy.NavigationDirection.BACK);
         }
 
-
-        public void row_click(Gtk.ListBox listBox, Gtk.ListBoxRow listBoxRow) {
-            configure_stack.set_visible_child_name(listBoxRow.get_name());
-            if (!configure_stack.get_child_visible()) configure_stack.set_child_visible(true);
-            leaflet.navigate(Hdy.NavigationDirection.FORWARD);
+        public void row_click (Gtk.ListBox listBox, Gtk.ListBoxRow listBoxRow) {
+            configure_stack.set_visible_child_name (listBoxRow.get_name ());
+            if (!configure_stack.get_child_visible ()) configure_stack.set_child_visible (true);
+            leaflet.navigate (Hdy.NavigationDirection.FORWARD);
         }
 
-        private void addChild(Profile profile, int index) {
-            string i = index.to_string();
-            configure_stack.add_titled(new KanshiConfGui.Configure(profile, i, profile.name), i, profile.name);
+        private void addChild (Profile profile, int index) {
+            string i = index.to_string ();
+            configure_stack.add_titled (new KanshiConfGui.Configure (profile, i, profile.name), i, profile.name);
         }
 
-        private void stack_on_add(Gtk.Container container, Gtk.Widget widget){
+        private void stack_on_add (Gtk.Container container, Gtk.Widget widget) {
             var conf = (Configure) widget;
-            var row = new Gtk.ListBoxRow();
-            row.add(new RowBox(conf.profile, conf.text));
-            row.set_name(conf.index);
+            var row = new Gtk.ListBoxRow ();
+            row.add (new RowBox (conf.profile, conf.text));
+            row.set_name (conf.index);
 
-            profiles_listBox.add(row);
+            profiles_listBox.add (row);
         }
 
-        private void stack_on_remove(Gtk.Container container, Gtk.Widget widget){
-
+        private void stack_on_remove (Gtk.Container container, Gtk.Widget widget) {
         }
-
     }
 }

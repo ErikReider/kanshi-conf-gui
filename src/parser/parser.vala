@@ -20,7 +20,7 @@ public class Profile {
     public Array<Monitor> monitors = new Array<Monitor>();
     public string name;
 
-    public Profile(string name){
+    public Profile (string name) {
         this.name = name;
     }
 }
@@ -34,8 +34,8 @@ public class Monitor {
     public string transform;
     public string exec;
 
-    public void print_values(){
-        print("%s %s %s %s %s %s %s \n", output, mode, position, disabled.to_string(), scale, transform, exec);
+    public void print_values () {
+        print ("%s %s %s %s %s %s %s \n", output, mode, position, disabled.to_string (), scale, transform, exec);
     }
 }
 
@@ -44,32 +44,32 @@ public class Parser {
     private int index = 1;
     public Array<Profile> profiles = new Array<Profile>();
 
-    public Parser(File file){
+    public Parser (File file) {
         try {
             var dis = new DataInputStream (file.read ());
             string line;
-            while ((line = dis.read_line (null)) != null) read_line(line.strip());
+            while ((line = dis.read_line (null)) != null) read_line (line.strip ());
         } catch (Error e) {
             error ("%s", e.message);
         }
     }
 
-    private void read_line(string line){
+    private void read_line (string line) {
         if (line[line.length - 1] == '{') {
-            var split = line.split(" ");
-            if (!split[0].has_prefix("profile")) {
-                print("Kanshi config formatted incorrectly!");
-                Process.exit(1);
+            var split = line.split (" ");
+            if (!split[0].has_prefix ("profile")) {
+                print ("Kanshi config formatted incorrectly!");
+                Process.exit (1);
             }
-            string name = (split[1] ?? "").replace("{", "");
-            if (name == "") name = "Unnamed profile " + index.to_string();
-            current_profile = new Profile(name);
+            string name = (split[1] ?? "").replace ("{", "");
+            if (name == "") name = "Unnamed profile " + index.to_string ();
+            current_profile = new Profile (name);
             index++;
         } else if (line[0] == '}') {
-            profiles.append_val(current_profile);
+            profiles.append_val (current_profile);
         } else {
-            string[] props = line.split(" ");
-            Monitor monitor = new Monitor();
+            string[] props = line.split (" ");
+            Monitor monitor = new Monitor ();
             if (props[0] == "output") {
                 monitor.output = props[1];
                 for (int i = 2; i < props.length; i++) {
@@ -95,10 +95,10 @@ public class Parser {
                             break;
                     }
                 }
-                current_profile.monitors.append_val(monitor);
+                current_profile.monitors.append_val (monitor);
             } else if (props[0] == "exec") {
-                monitor.exec = line.substring("exec ".length, -1);
-                current_profile.monitors.append_val(monitor);
+                monitor.exec = line.substring ("exec ".length, -1);
+                current_profile.monitors.append_val (monitor);
             }
         }
     }
