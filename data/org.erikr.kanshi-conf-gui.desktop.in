@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=kanshi-conf-gui
+Exec=kanshi-conf-gui
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true
